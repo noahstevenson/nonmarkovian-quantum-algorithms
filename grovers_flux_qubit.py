@@ -197,7 +197,8 @@ class Grovers:
                 self.c.append(bath_bath_xx_yy.on(bath_qubit, other_bath_qubit))
 
     def main_oqs(self, target=3, n_computation_qubits=2, n_bath_qubits=3, n_iterations=1, n_simulations=1000,
-                 amplitude_damping_constant=0, bath_type='Markovian', prob_ground=1, print_runtime=False, print_prob_correct=False):
+                 amplitude_damping_constant=0, bath_type='Markovian', prob_ground=1, print_runtime=False,
+                 print_prob_correct=False, print_circuit=False, run_simulation=True):
         """ Runs Grover's algorithm on (n_computation_qubits)-qubits """
 
         _start_ = time.time()  # for recording runtime
@@ -216,6 +217,13 @@ class Grovers:
         self.computation_qubits, self.oracle_qubit = self.set_io_qubits()  # Set up input and output qubits.
         _simulator_ = cirq.DensityMatrixSimulator()  # initialize simulator
 
+        if print_circuit:
+            self.c = self.make_grover_circuit_oqs()
+            print(self.c)
+
+        if run_simulation is False:
+            exit()
+            
         for i in range(n_simulations):
 
             # compile a quantum circuit for Grover's algorithm each time to set \
