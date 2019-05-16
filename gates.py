@@ -77,4 +77,4 @@ class XX_YY(cirq.TwoQubitGate):
         return 2*(_xx_yy_/np.linalg.norm(_xx_yy_))
 
     def _circuit_diagram_info_(self, args):
-        return f'XX_YY({str(self.theta)[:5]})', f'XX_YY({str(self.theta)[:5]})'
+        return f'XX_YY', f'XX_YY'

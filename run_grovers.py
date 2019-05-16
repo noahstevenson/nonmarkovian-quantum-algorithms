@@ -13,16 +13,16 @@ savedir = r'C:\\Users\\Noah\\Documents\\academics\\coursework\\2019Spring\\p191\
 filename = 'flux-qubit-2system5bath-{0}'.format(datetime.today().strftime('%Y%m%d_%H%M%S'))
 
 # the maximum number of Grover's algorithm to sweep through
-max_iterations = 10
+max_iterations = 4
 
 # the number of batches to run at each iteration-point. Equivalent to multiplying n_simulations by this number.
 # Used instead of n_simulations to see how spread changes
 batch_size = 10
 
 n_computational_qubits = 2
-n_bath_qubits = 5
+n_bath_qubits = 1
 target = 3
-n_simulations = 50
+n_simulations = 10
 prob_ground = 0.821662
 
 # dictionary to store data

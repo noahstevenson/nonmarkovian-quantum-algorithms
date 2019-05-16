@@ -198,7 +198,7 @@ class Grovers:
 
     def main_oqs(self, target=3, n_computation_qubits=2, n_bath_qubits=3, n_iterations=1, n_simulations=1000,
                  amplitude_damping_constant=0, bath_type='Markovian', prob_ground=1, print_runtime=False,
-                 print_prob_correct=False, print_circuit=False, run_simulation=True):
+                 print_prob_correct=False, print_circuit=False, run_simulation=True, c_start=None, c_end=None):
         """ Runs Grover's algorithm on (n_computation_qubits)-qubits """
 
         _start_ = time.time()  # for recording runtime
@@ -219,25 +219,24 @@ class Grovers:
 
         if print_circuit:
             self.c = self.make_grover_circuit_oqs()
-            print(self.c)
+            print(self.c[c_start: c_end])
 
-        if run_simulation is False:
-            exit()
-            
-        for i in range(n_simulations):
+        if run_simulation is True:
 
-            # compile a quantum circuit for Grover's algorithm each time to set \
-            # different qubits according to partition function
-            self.c = self.make_grover_circuit_oqs()
-            _result_ = _simulator_.run(self.c, repetitions=1)  # run the simulation
-            _hist_ = _result_.histogram(key='result')
-            counter += _hist_[self.target]  # check if the circuit results in the desired outcome
+            for i in range(n_simulations):
 
-        prob_correct = counter/self.n_simulations  # covert raw outcomes to probability
+                # compile a quantum circuit for Grover's algorithm each time to set \
+                # different qubits according to partition function
+                self.c = self.make_grover_circuit_oqs()
+                _result_ = _simulator_.run(self.c, repetitions=1)  # run the simulation
+                _hist_ = _result_.histogram(key='result')
+                counter += _hist_[self.target]  # check if the circuit results in the desired outcome
 
-        if print_prob_correct: print(prob_correct)
-        _stop_ = time.time()
+            prob_correct = counter/self.n_simulations  # covert raw outcomes to probability
 
-        if print_runtime: print(f'\n runtime: {str(_stop_-_start_)[:5]} seconds')
+            if print_prob_correct: print(prob_correct)
+            _stop_ = time.time()
 
-        return prob_correct
+            if print_runtime: print(f'\n runtime: {str(_stop_-_start_)[:5]} seconds')
+
+            return prob_correct
